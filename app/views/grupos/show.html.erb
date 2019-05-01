@@ -3,7 +3,17 @@
 <p>
   <strong>Nome grupo:</strong>
   <%= @grupo.nome_grupo %>
+  <br>
+  <strong>Usuários</strong>
+  <% @grupo.usuario_grupos.each do |grupo| %>
+  <p>Email do usuario: <%= grupo.user.email %>   Nome do usuário: <%= grupo.user.nome %></p>
+<% end %>
 </p>
 
 <%= link_to 'Edit', edit_grupo_path(@grupo) %> |
 <%= link_to 'Back', grupos_path %>
+<%= link_to 'Convidar', convite_path(@grupo), class: 'btn btn-primary' %>
+<%= link_to 'Sortear', sortear_path(@grupo), method: :post, class: 'btn btn-primary' %>
+<%= link_to 'Editar', edit_grupo_path(@grupo), class: 'btn btn-primary' %>
+<%= link_to 'Apagar', grupo_path(@grupo), method: :delete, class: 'btn btn-primary' %>
+

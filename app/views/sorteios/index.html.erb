@@ -1,0 +1,9 @@
+<br>
+<% @sorteios.each do |sorteio| %>
+    
+    <% if sorteio.remetente.email == current_user.email %>
+      <p>Nome do grupo do sorteio: <%= link_to(sorteio.grupo.nome_grupo, grupo_path(sorteio.grupo)) %></p>
+      <p>Email do usuario: <%= sorteio.remetente.email %></p>
+      <p>Email do seu sorteado: <%= sorteio.destinatario.email %></p>
+    <% end %>
+  <% end %>

@@ -2,6 +2,16 @@
 
 <h1>Grupos</h1>
 
+<% if user_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>  
+  </li>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -17,7 +27,8 @@
         <td><%= link_to 'Show', grupo %></td>
         <td><%= link_to 'Edit', edit_grupo_path(grupo) %></td>
         <td><%= link_to 'Destroy', grupo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <td><%= link_to 'Sorteios', sorteios_path, method: :get, class: 'btn btn-primary' %></td>
+        </tr>
     <% end %>
   </tbody>
 </table>
