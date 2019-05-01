@@ -1,6 +1,11 @@
-<h1>Editing Grupo</h1>
-
-<%= render 'form', grupo: @grupo %>
-
-<%= link_to 'Show', @grupo %> |
-<%= link_to 'Back', grupos_path %>
+<h1>Editar Grupos</h1>
+<%= simple_form_for(@grupo) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :nome_grupo, label: 'Nome' %>
+  <%= f.collection_check_boxes :user_ids, User.all, :id, :email%>
+  <br>
+  <%= f.submit 'Enviar', class: 'btn btn-primary' %>
+<% end %>
+<br>
+<%= link_to 'Apagar', grupo_path(@grupo), method: :delete, class: 'btn btn-primary' %>
+<br>

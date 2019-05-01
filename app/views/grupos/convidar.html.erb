@@ -1,0 +1,8 @@
+<h1>Convidar um novo usuario para o grupo: <%= @grupo.nome_grupo %></h1>
+
+<p id="notice"><%= notice %></p>
+
+<%= simple_form_for :convite, { url: convite_path } do |f| %>
+  <%= f.input :email, label: 'Email do convidado' %>
+  <%= f.submit 'Enviar', class: 'btn btn-primary' %>
+<% end %>

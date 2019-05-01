@@ -1,6 +1,6 @@
 class GruposController < ApplicationController
   before_action :set_grupo, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /grupos
   # GET /grupos.json
   def index
@@ -58,6 +58,35 @@ class GruposController < ApplicationController
     respond_to do |format|
       format.html { redirect_to grupos_url, notice: 'Grupo was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def convidar
+    @grupo = Grupo.find(params[:id])
+  end
+
+  def convite
+    @grupo = Grupo.find(params[:id])
+    user = User.find_by(email: params[:convite][:email])
+    usuario_grupos = @grupo.usuario_grupos.create(user: user)
+    respond_to do |format|
+      if usuario_grupos.persisted?
+          format.html { render :convidar, notice: 'Convidado com sucesso!' }
+          format.json { render :show, status: :created, location: @grupo }
+      else
+        format.html { render :convidar, notice: 'Erro ao convidar' }
+        format.json { render json: @grupo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def sorteio
+    @grupo = Grupo.find(params[:id])
+    lista = @grupo.usuario_grupos
+    listaSorteada = lista.shuffle
+    listaSorteada.each_with_index do |item, index|
+      sorteado = Sorteio.new(grupo: @grupo, remetente_id: item.user_id, destinatario_id: listaSorteada[index - 1].user_id)
+      sorteado.save
     end
   end
 
